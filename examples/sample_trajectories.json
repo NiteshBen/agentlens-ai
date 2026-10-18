@@ -1,0 +1,67 @@
+{
+  "session_id": "session_sample_8832a",
+  "workflow_name": "Autonomous Technical Due Diligence",
+  "goal": "Audit open-source dependencies and generate security report",
+  "steps": [
+    {
+      "step_index": 0,
+      "step_id": "step_001",
+      "agent_name": "SecurityAuditor",
+      "role": "Vulnerability Scanner",
+      "thought": "Scanning pyproject.toml and requirements.txt for pinned dependencies",
+      "tool_calls": [
+        {
+          "id": "call_001",
+          "tool_name": "file_reader",
+          "arguments": {"path": "requirements.txt"},
+          "result": "pydantic>=2.0\nrequests>=2.31.0\npytest>=8.0",
+          "latency_ms": 12.4,
+          "status": "success"
+        }
+      ],
+      "observation": "Found 3 pinned direct dependencies.",
+      "prompt_tokens": 140,
+      "completion_tokens": 60,
+      "latency_ms": 14.5
+    },
+    {
+      "step_index": 1,
+      "step_id": "step_002",
+      "agent_name": "SecurityAuditor",
+      "role": "Vulnerability Scanner",
+      "thought": "Checking OSV and CVE database for reported vulnerabilities",
+      "tool_calls": [
+        {
+          "id": "call_002",
+          "tool_name": "cve_database_lookup",
+          "arguments": {"packages": ["pydantic", "requests", "pytest"]},
+          "result": "Zero active CVEs detected across specified versions.",
+          "latency_ms": 84.1,
+          "status": "success"
+        }
+      ],
+      "observation": "Dependencies are verified clear of known vulnerabilities.",
+      "prompt_tokens": 190,
+      "completion_tokens": 75,
+      "latency_ms": 89.2
+    },
+    {
+      "step_index": 2,
+      "step_id": "step_003",
+      "agent_name": "LeadArchitect",
+      "role": "Reviewer",
+      "thought": "Synthesizing executive security sign-off report",
+      "tool_calls": [],
+      "observation": "Final sign-off generated.",
+      "prompt_tokens": 210,
+      "completion_tokens": 120,
+      "latency_ms": 11.0
+    }
+  ],
+  "start_time": "2026-10-18T07:00:00Z",
+  "end_time": "2026-10-18T07:00:01Z",
+  "final_answer": "Security Audit Passed: No known CVEs detected in production dependency graph.",
+  "total_tokens": 795,
+  "estimated_cost_usd": 0.000185,
+  "metadata": {"environment": "production-ci"}
+}
